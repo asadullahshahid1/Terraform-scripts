@@ -1,5 +1,3 @@
-
-
 # Create virtual network
 resource "azurerm_virtual_network" "my_terraform_network" {
   name                = "my-first-terraform-network"
@@ -14,7 +12,12 @@ resource "azurerm_subnet" "my_terraform_subnet" {
   resource_group_name  = "1-9d1a3f81-playground-sandbox"
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
+
+  depends_on = [
+    azurerm_virtual_network.my_terraform_network
+  ]
 }
+
 
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
@@ -100,4 +103,19 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
     username   = "secureadmin"
     public_key = tls_private_key.secureadmin_ssh.public_key_openssh
   }
+}
+# Create a blob storage account
+resource "azurerm_storage_account" "my_storage_account" {
+  name                     = "mystorageaccount"
+  resource_group_name      = "1-9d1a3f81-playground-sandbox"
+  location                 = "South Central US"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# Create a blob container
+resource "azurerm_storage_container" "containertfstate" {
+  name                  = "containertfstate"
+  storage_account_name  = azurerm_storage_account.my_storage_account.name
+  container_access_type = "private"
 }
