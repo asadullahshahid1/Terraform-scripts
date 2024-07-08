@@ -18,7 +18,6 @@ resource "azurerm_subnet" "my_terraform_subnet" {
   ]
 }
 
-
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
   name                = "my-first-terraform-PublicIP"
@@ -32,8 +31,7 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
   name                = "my-first-terraform-NetworkSecurityGroup"
   location            = "East US"
   resource_group_name = "1-8959905e-playground-sandbox"
-# Note that this rule will allow all external connections from internet to SSH port
-  
+
   security_rule {
     name                       = "SSH"
     priority                   = 200
@@ -104,6 +102,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
     public_key = tls_private_key.secureadmin_ssh.public_key_openssh
   }
 }
+
 # Create a blob storage account
 resource "azurerm_storage_account" "mystorage786" {
   name                     = "mystorage786"
@@ -114,8 +113,8 @@ resource "azurerm_storage_account" "mystorage786" {
 }
 
 # Create a blob container
-resource "azurerm_storage_container" "container_tfstate" {
-  name                  = "container_tfstate"
-  storage_account_name  = azurerm_storage_account.mystorage786
+resource "azurerm_storage_container" "container-tfstate" {
+  name                  = "container-tfstate"
+  storage_account_name  = azurerm_storage_account.mystorage786.name
   container_access_type = "private"
 }

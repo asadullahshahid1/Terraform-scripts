@@ -8,7 +8,7 @@ terraform {
   backend "azurerm" {
     resource_group_name = "1-8959905e-playground-sandbox"
     storage_account_name = "mystorage786"
-    container_name = "container-tf.state"
+    container_name = "container-tfstate"
     key = "path/to/my/key/terraform.tfstate"
   }
 }
