@@ -2,14 +2,14 @@
 resource "azurerm_virtual_network" "my_terraform_network" {
   name                = "my-first-terraform-network"
   address_space       = ["10.0.0.0/16"]
-  location            = "South Central US"
-  resource_group_name = "1-9d1a3f81-playground-sandbox"
+  location            = "East US"
+  resource_group_name = "1-8959905e-playground-sandbox"
 }
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
   name                 = "my-first-terraform-subnet"
-  resource_group_name  = "1-9d1a3f81-playground-sandbox"
+  resource_group_name  = "1-8959905e-playground-sandbox"
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
 
@@ -22,16 +22,16 @@ resource "azurerm_subnet" "my_terraform_subnet" {
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
   name                = "my-first-terraform-PublicIP"
-  location            = "South Central US"
-  resource_group_name = "1-9d1a3f81-playground-sandbox"
+  location            = "East US"
+  resource_group_name = "1-8959905e-playground-sandbox"
   allocation_method   = "Dynamic"
 }
 
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "my_terraform_nsg" {
   name                = "my-first-terraform-NetworkSecurityGroup"
-  location            = "South Central US"
-  resource_group_name = "1-9d1a3f81-playground-sandbox"
+  location            = "East US"
+  resource_group_name = "1-8959905e-playground-sandbox"
 # Note that this rule will allow all external connections from internet to SSH port
   
   security_rule {
@@ -50,8 +50,8 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
 # Create network interface
 resource "azurerm_network_interface" "my_terraform_nic" {
   name                = "my-first-terraform-myNIC"
-  location            = "South Central US"
-  resource_group_name = "1-9d1a3f81-playground-sandbox"
+  location            = "East US"
+  resource_group_name = "1-8959905e-playground-sandbox"
 
   ip_configuration {
     name                          = "my-first-terraform-nic-configuration"
@@ -76,8 +76,8 @@ resource "tls_private_key" "secureadmin_ssh" {
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   name                  = "my-first-terraform-VM"
-  location              = "South Central US"
-  resource_group_name   = "1-9d1a3f81-playground-sandbox"
+  location              = "East US"
+  resource_group_name   = "1-8959905e-playground-sandbox"
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
   size                  = "Standard_DS1_v2"
 
@@ -107,8 +107,8 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 # Create a blob storage account
 resource "azurerm_storage_account" "my_storage_account" {
   name                     = "mystorageaccount"
-  resource_group_name      = "1-9d1a3f81-playground-sandbox"
-  location                 = "South Central US"
+  resource_group_name      = "1-8959905e-playground-sandbox"
+  location                 = "East US"
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }

@@ -1,5 +1,5 @@
 output "resource_group_name" {
-  value = "1-9d1a3f81-playground-sandbox"
+  value = "1-8959905e-playground-sandbox"
 }
 
 output "public_ip_address" {
