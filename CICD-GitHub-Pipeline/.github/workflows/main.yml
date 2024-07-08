@@ -17,6 +17,8 @@ jobs:
       
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.ARM_ACCESS_TOKEN }}
       
     - name: Terraform Init
       run: terraform init
@@ -34,11 +36,13 @@ jobs:
       
     - name: Connect to VM and Run Ansible
       env:
-        VM_PUBLIC_IP: ${{ steps.vm_public_ip.outputs.ip }}  
+        VM_PUBLIC_IP: ${{ steps.vm_public_ip.outputs.ip }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        sudo apt update
-        sudo apt install -y ansible
-        ansible-playbook playbook.yml -i "$VM_PUBLIC_IP,"
+        echo "$SSH_PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        ssh-keyscan -H "$VM_PUBLIC_IP" >> ~/.ssh/known_hosts
+        ansible-playbook playbook.yml -i "$VM_PUBLIC_IP," --private-key private_key
       
     - name: Destroy Infrastructure
       run: terraform destroy -auto-approve
