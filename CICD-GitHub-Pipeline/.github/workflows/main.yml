@@ -1,0 +1,44 @@
+name: Terraform Provision CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      
+    - name: Terraform Init
+      run: terraform init
+      
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      
+    - name: Terraform Destroy
+      if: always()
+      run: terraform destroy -auto-approve
+      
+    - name: Get VM Public IP
+      id: vm_public_ip
+      run: echo "::set-output name=ip::$(terraform output vm_public_ip)"
+      
+    - name: Connect to VM and Run Ansible
+      env:
+        VM_PUBLIC_IP: ${{ steps.vm_public_ip.outputs.ip }}  
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
+        ansible-playbook playbook.yml -i "$VM_PUBLIC_IP,"
+      
+    - name: Destroy Infrastructure
+      run: terraform destroy -auto-approve
