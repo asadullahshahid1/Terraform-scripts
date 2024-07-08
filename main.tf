@@ -105,8 +105,8 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   }
 }
 # Create a blob storage account
-resource "azurerm_storage_account" "my_storage_account" {
-  name                     = "mystorageaccount"
+resource "azurerm_storage_account" "mystorage786" {
+  name                     = "mystorage786"
   resource_group_name      = "1-8959905e-playground-sandbox"
   location                 = "East US"
   account_tier             = "Standard"
@@ -114,8 +114,8 @@ resource "azurerm_storage_account" "my_storage_account" {
 }
 
 # Create a blob container
-resource "azurerm_storage_container" "containertfstate" {
-  name                  = "containertfstate"
-  storage_account_name  = azurerm_storage_account.my_storage_account.name
+resource "azurerm_storage_container" "container_tfstate" {
+  name                  = "container_tfstate"
+  storage_account_name  = azurerm_storage_account.mystorage786
   container_access_type = "private"
 }
