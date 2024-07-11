@@ -121,10 +121,11 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile {
     computer_name  = var.computer_name
     admin_username = "azureuser"
+    admin_password = "Password1234!"
   }
 
   os_profile_linux_config {
-    disable_password_authentication = true
+    disable_password_authentication = false
 
     ssh_keys {
       path     = "/home/azureuser/.ssh/authorized_keys"
