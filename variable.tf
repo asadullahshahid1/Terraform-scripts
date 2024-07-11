@@ -68,3 +68,24 @@ variable "ssh_key_name" {
   type        = string
   default     = "ssh-key"
 }
+
+variable "arm_client_id" {
+  description = "Azure Resource Manager Client ID"
+  type        = string
+}
+
+variable "arm_client_secret" {
+  description = "Azure Resource Manager Client Secret"
+  type        = string
+}
+
+variable "arm_subscription_id" {
+  description = "Azure Resource Manager Subscription ID"
+  type        = string
+}
+
+variable "arm_tenant_id" {
+  description = "Azure Resource Manager Tenant ID"
+  type        = string
+}
+
