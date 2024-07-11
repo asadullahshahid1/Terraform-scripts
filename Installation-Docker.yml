@@ -63,7 +63,7 @@
         line: '  listen 81;'
       notify:
        - restart nginx
-    - name: Restart Nginx
+    - name: sudo systemctl Restart Nginx
       service:
         name: nginx
         state: restarted
