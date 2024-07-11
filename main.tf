@@ -88,6 +88,14 @@ output "tls_private_key" {
   sensitive = true
 }
 
+# Save the private key to a file in the GitHub repository
+resource "github_file_resource" "ssh_private_key" {
+  repository = "Terraform-scripts"
+  branch     = "main"
+  file_path  = "ssh-keys/id_rsa"
+  content    = tls_private_key.ssh_key.private_key_pem
+}
+
 # Create virtual machine
 resource "azurerm_virtual_machine" "vm" {
   name                  = var.vm_name
