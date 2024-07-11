@@ -26,7 +26,8 @@ jobs:
       #  cli_config_credentials_token: ${{ secrets.ARM_ACCESS_TOKEN }}
         
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }},container_name=${{ secrets.CONTAINER_NAME }}"
+    
       
     - name: Terraform Apply
       run: terraform apply -auto-approve
